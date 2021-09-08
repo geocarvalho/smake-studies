@@ -1,0 +1,14 @@
+rule all:
+    input:
+        "file1.txt"
+
+rule touchfile:
+    input:
+    output:
+        file_1 = "file1.txt",
+        file_2 = "file2.txt"
+    message:
+        "Generating files {output.file_1} and {output.file_2}"
+    shell:
+        "touch {output}"
+# snakemake -c1 -p

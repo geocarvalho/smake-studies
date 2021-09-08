@@ -1,0 +1,15 @@
+rule all:
+    input: expand("converted.{n}.txt", n=[1,2,3,4,5,6,7])
+
+rule create:
+    output: "file.{whatever}.txt"
+    message: "Creating file {output}"
+    shell: "touch {output}"
+rule something:
+    input: "file.{thing}.txt"
+    output: "converted.{thing}.txt"
+    message: "Converting {input} to {output}"
+    shell: "cp {input} {output}"
+# snakemake -c8
+# snakemake --rulegraph | dot -Tpng > rulegraph.png
+# snakemake --dag | dot -Tpng > ruledag.png

@@ -1,0 +1,38 @@
+rule all:
+    input: 
+        expand("converted.{n}.txt", n=[1,2,3,4,5,6,7]),
+        "table_mod.txt"
+
+rule create:
+    output: "file.{n}.txt"
+    message: "Creating file {output}"
+    shell: "bash touch.sh"
+
+rule something:
+    input: "file.{thing}.txt"
+    output: "converted.{thing}.txt"
+    params:
+        threshold = "-m 0.01",
+        scale = "-s 100",
+        kclust = "-k {thing}"
+    message: "Converting {input} to {output}"
+    shell: "bash convert.sh {input} {output}"
+# snakemake -c8
+# snakemake --rulegraph | dot -Tpng > rulegraph.png
+# snakemake --dag | dot -Tpng > ruledag.png
+
+rule create_table:
+    output: "table.txt"
+    shell:
+        """
+        echo "age,size,year,index" > {output}
+        for i in {{1..30}};do
+            echo "1,2,3,4" >> table.txt
+        done
+        """
+
+rule plot:
+    input: "table.txt"
+    output: "table_mod.txt"
+    log: "table_plot.pdf"
+    shell: "Rscript plot_things.r {input} {output} {log}"
