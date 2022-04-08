@@ -1,0 +1,15 @@
+import pandas as pd
+
+configfile: "config.yaml"
+
+print(config)
+
+rule filter_data:
+    input: "data.csv"
+    params:
+        pval=config["thresholds"]["pvalue"]
+    output: "output.csv"
+    run:
+        df = pd.read_csv(input[0])
+        df = df.loc[df["pvalue"] < params.pval, :]
+        df.to_csv(output[0], index=False)
