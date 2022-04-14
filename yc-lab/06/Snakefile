@@ -1,0 +1,6 @@
+# singularity: "docker://python:3.11.0a5-bullseye"
+
+rule hello:
+    output: "hello.txt"
+    singularity: "python_3.11.0a5-bullseye"
+    script: "test.py"

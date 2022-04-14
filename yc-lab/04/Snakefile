@@ -1,0 +1,5 @@
+include: "rules/rule-a.smk"
+
+rule:
+    output: "hello.txt"
+    shell: "touch {output}"

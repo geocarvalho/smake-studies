@@ -1,0 +1,22 @@
+rule one:
+    output:
+        "{prefix}.txt"
+    shell:
+        "echo {wildcards.prefix} > {output}"
+
+rule two:
+    output:
+        "{prefix}.tsv"
+    shell:
+        "echo {wildcards.prefix} > {output}"
+
+rule combine:
+    input:
+        "{one}.txt",
+        "{two}.txt"
+    output:
+        "{one}-{two}.combined"
+    log:
+        "{one}_{two}.combined.log"
+    shell:
+        "cat {input} > {output} 2> {log}"

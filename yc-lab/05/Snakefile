@@ -1,0 +1,13 @@
+
+configfile: "config.yaml"
+
+input_list = [f"{sample}.txt" for sample in config["input-samples"]]
+
+rule all:
+    input: input_list
+    output: "all.results.txt"
+    shell: "cat {input} > {output}"
+
+rule analyse:
+    output: "{prefix}.txt"
+    shell: "echo {wildcards.prefix} > {output}"

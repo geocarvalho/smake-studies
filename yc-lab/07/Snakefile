@@ -1,0 +1,13 @@
+numbers = range(0, 1000)
+
+rule all:
+    input:
+        expand("output/{num}.txt", num=numbers)
+
+rule hello:
+    output:
+        "output/{num}.txt"
+    run:
+        with open(output[0], "w") as f:
+            f.write(wildcards.num)
+            f.write("\n")
